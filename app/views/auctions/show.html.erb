@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Description:</strong>
+  <br/>
+  <%= h(@auction.description).gsub(/\n/, '<br/>').html_safe %>
+</p>
+
+<p>
+  <strong>Cena początkowa</strong>
+  <%= @auction.price %>
+</p>
+<p>
+  <strong>User</strong>
+  <% @user.each do |user| %>
+  <%= link_to user.email ,user %>
+  <% end %>
+</p>
+<table class="table table-striped table-dark">
+<tbody class="table table-striped table-dark">
+<p>
+	<strong> Aktualna cena </strong>
+	<% @tickets.each do |ticket|  %>
+	<tr>
+        <td><%= ticket.amount %></td>
+	</tr>
+	<% end %>
+</p>
+</tbody>
+</table>
+<% if current_user.try(:admin) %>
+
+<%= link_to 'Edit', edit_auction_path(@auction) %> |
+<% end %> 
+<%= link_to 'Back', auctions_path %>
+<div>
+	<%=link_to "Licytuj", new_auction_ticket_path(@auction), class: "btn-custom"%>
+</div>
+

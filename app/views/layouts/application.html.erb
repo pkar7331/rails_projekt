@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AuctionsOnline</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" type="submit">Alpha2</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><%= link_to 'Home', root_path %></li>
+            <li><a>About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <%if user_signed_in? %>
+            <li>
+                <%= link_to "Wyloguj się", destroy_user_session_path, method: :delete  %>
+            </li>
+          <%else%>
+            <li>             
+              <%= link_to "Zaloguj się",  new_user_session_path %>
+            </li>
+          <%end%>
+        </ul>
+    </div>
+</nav>
+    <%= yield %>
+  </body>
+</html>

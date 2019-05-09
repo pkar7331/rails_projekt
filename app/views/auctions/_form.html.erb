@@ -1,0 +1,8 @@
+<%= simple_form_for @auction, :html => {:mutlipart=> true} do |f| %>
+<%= f.input :title,required: true%>
+<%= f.input :description,required: true%>
+<%= f.input :price%>
+<%= f.button :submit,required: true, :class=> 'btn' %>
+
+
+<%end%>

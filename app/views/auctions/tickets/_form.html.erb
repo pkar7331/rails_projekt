@@ -1,0 +1,26 @@
+<span class="border border-danger">
+<p><strong><%= notice %></strong></p></span>
+<%= form_for ([@auction, @ticket]) do |f| %>
+  <% if @ticket.errors.any? %>
+    <div id="error_explanation">
+<div class="alert alert-danger" role="alert">
+        <%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+</div>
+      <ul>
+      <% @ticket.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

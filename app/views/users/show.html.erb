@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<% if current_user.id == @user.id %>
+<h1>Your auctions</h1>
+<%else%>
+<h1>Users auctions</h1>
+<%end%>
+<table class="table" style="float: left">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Price</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @own_auctions.each do |auction| %>
+      <tr>
+        <td><%= auction.description %></td>
+        <td><%= auction.price %> zł</td>
+        <td><%= link_to 'Show', auction %></td>
+        <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
+        <td><%= link_to 'Destroy', auction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>  
+  </tbody>
+</table>
+
+
+
+<br>
+
