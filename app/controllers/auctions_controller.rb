@@ -36,6 +36,7 @@ class AuctionsController < ApplicationController
   # GET /auctions/new
   def new
     @auction = Auction.new
+
   end
 
   # GET /auctions/1/edit

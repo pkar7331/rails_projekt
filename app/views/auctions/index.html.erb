@@ -29,9 +29,9 @@
         <td><%= auction.price %> zł</td>
         <td><%= TimeDifference.between(DateTime.now, auction.ends_at).humanize %></td>
         <td><%= link_to 'Show', auction %></td>
-        <% if current_user.admin? %>
+
         <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
-        <%end%>
+
         <td><%= link_to 'Destroy', auction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
       <% end %>  

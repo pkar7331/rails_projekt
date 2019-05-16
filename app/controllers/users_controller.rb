@@ -2,12 +2,13 @@ class UsersController < ApplicationController
 	before_action :authenticate_user!, only: [:new, :edit, :show]
 	before_action :set_user
 	before_action :set_own_auctions
-
+	before_action :set_bid_auctions
 	def index	
 		
 	end
 
 	def show
+
 	end
 
 		private 

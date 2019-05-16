@@ -2,7 +2,7 @@
 <%= f.input :title,required: true%>
 <%= f.input :description,required: true%>
 <%= f.input :price%>
-<%= f.datetime_select(:ends_at,:default => {:hour => Time.now.hour, :minute => Time.now.min }, required: true) %>
+<%= f.datetime_select(:ends_at, required: true) %>
 
 <%= f.button :submit, required: true, :class=> 'btn btn-primary'%>
 
