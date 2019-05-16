@@ -8,7 +8,8 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 gem 'jquery-rails'
 gem 'simple_form'
-
+gem 'rufus-scheduler' 
+gem 'time_difference'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'

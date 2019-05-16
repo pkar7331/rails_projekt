@@ -16,16 +16,16 @@
   <% end %>
 </p>
 <table class="table table-striped table-dark">
-<tbody class="table table-striped table-dark">
-<p>
-	<strong> Aktualna cena </strong>
-	<% @tickets.each do |ticket|  %>
-	<tr>
-        <td><%= ticket.amount %></td>
-	</tr>
-	<% end %>
-</p>
-</tbody>
+  <tbody class="table table-striped table-dark">
+  <p>
+  	<strong> Aktualna cena </strong>
+  	<% @tickets.each do |ticket|  %>
+  	<tr>
+          <td><%= ticket.amount %></td>
+  	</tr>
+  	<% end %>
+  </p>
+  </tbody>
 </table>
 <% if current_user.try(:admin) %>
 

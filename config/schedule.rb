@@ -13,8 +13,8 @@
 #   rake "some:great:rake:task"
 # end
 #
- every 1.minute do
-   runner "Auction.deleteall"
- end
-
+set :environment, "development"
+every 1.minute do
+	rake 'whatever'
+end
 # Learn more: http://github.com/javan/whenever

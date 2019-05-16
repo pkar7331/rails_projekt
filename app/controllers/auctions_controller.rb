@@ -6,11 +6,18 @@ class AuctionsController < ApplicationController
   # GET /auctions
   # GET /auctions.json
   def index
-    @auctions = Auction.all.paginate(page: params[:page], per_page: 10)
+    @auctions = Auction.where(:active_boolean => 1).
+                        where('ends_at > ?', DateTime.now).
+                        paginate(page: params[:page], per_page: 10)
+    #@auctions = Auction.where(:active_boolean => true).
+    #                    where("ends_at > ?", DateTime.now).
+    #                    paginate(page: params[:page], per_page: 10)
     @search = params["search"]
     if @search.present?
       @title = @search["title"]
-      @auctions = Auction.where("title LIKE ?", "%#{@title}%").paginate(page: params[:page], per_page: 10)
+      @auctions = Auction.where("title LIKE ?", "%#{@title}%").
+                          where(:active_boolean => 1).where('ends_at > ?', DateTime.now).
+                          paginate(page: params[:page], per_page: 10)
     end
 
   #  if user_signed_in?
@@ -46,6 +53,7 @@ class AuctionsController < ApplicationController
   def create
     @auction = Auction.new(auction_params)
     @auction.user_id = current_user.id
+    @auction.active_boolean = true
     respond_to do |format|
       if @auction.save
         format.html { redirect_to @auction, notice: 'Auction was successfully created.' }
@@ -60,6 +68,7 @@ class AuctionsController < ApplicationController
   # PATCH/PUT /auctions/1
   # PATCH/PUT /auctions/1.json
   def update
+    @auction.ends_at = DateTime.now
     respond_to do |format|
       if @auction.update(auction_params)
         format.html { redirect_to @auction, notice: 'Auction was successfully updated.' }
@@ -74,7 +83,7 @@ class AuctionsController < ApplicationController
   # DELETE /auctions/1
   # DELETE /auctions/1.json
   def destroy
-    if user_signed_in?
+    if current_user.admin?
       @auction.destroy
       respond_to do |format|
         format.html { redirect_to auctions_url, notice: 'Auction was successfully destroyed.' }
@@ -82,8 +91,7 @@ class AuctionsController < ApplicationController
       end
     end
   end
-
-  
+ 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_auction
@@ -92,7 +100,7 @@ class AuctionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def auction_params
-      params.require(:auction).permit(:description, :price, :title)
+      params.require(:auction).permit(:description, :price, :title, :ends_at)
     end
 
     def set_user
