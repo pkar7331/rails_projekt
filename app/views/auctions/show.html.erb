@@ -1,4 +1,16 @@
-<p id="notice"><%= notice %></p>
+
+<% if @auction.try(:active_boolean) %>
+  <div class="success">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong><center>STATUS active</center></strong>
+  </div>
+<%else%>
+  <div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong><center>STATUS inactive</center></strong>
+  </div>
+<% end %>
+
 <p>
   <strong>Description:</strong>
   <br/>
@@ -28,11 +40,13 @@
   </tbody>
 </table>
 <% if current_user.try(:admin) %>
-
-<%= link_to 'Edit', edit_auction_path(@auction) %> |
+  <%= link_to 'Edit', edit_auction_path(@auction) %> |
 <% end %> 
-<%= link_to 'Back', auctions_path %>
-<div>
-	<%=link_to "Licytuj", new_auction_ticket_path(@auction), class: "btn-custom"%>
+<div class=btn-group>
+  <%= button_to 'Edit', edit_auction_path(@auction), :method => :get, :class=> 'btn btn-primary' %>
+  <%= button_to 'Back', auctions_path, :method => :get, :class=> 'btn btn-primary' %>
+  <%= button_to "Bid", new_auction_ticket_path(@auction), :method => :get, :class=> 'btn btn-primary' %>
 </div>
 
+
+<p id="notice"><%= notice %></p>

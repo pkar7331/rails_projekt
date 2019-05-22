@@ -29,9 +29,7 @@
         <td><%= auction.price %> zł</td>
         <td><%= TimeDifference.between(DateTime.now, auction.ends_at).humanize %></td>
         <td><%= link_to 'Show', auction %></td>
-
         <td><%= link_to 'Edit', edit_auction_path(auction) %></td>
-
         <td><%= link_to 'Destroy', auction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
       <% end %>  
@@ -39,6 +37,6 @@
 </table>
 <br>
 
-<%= link_to 'New Auction', new_auction_path %>
-<center> <%= will_paginate @auctions %> </center>
+<%= button_to "New Auction", new_auction_path, :method => :get, :class=> 'btn btn-primary' %>
+<center> <%= will_paginate @auctions%> </center>
 

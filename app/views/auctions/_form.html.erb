@@ -3,9 +3,9 @@
 <%= f.input :description,required: true%>
 <%= f.input :price%>
 <%= f.datetime_select(:ends_at, required: true) %>
+</br>
+</br>
 
 <%= f.button :submit, required: true, :class=> 'btn btn-primary'%>
-
-
-
+<%= button_to "Back", auctions_path, :method => :get, :class=> 'btn btn-primary' %>
 <%end%>

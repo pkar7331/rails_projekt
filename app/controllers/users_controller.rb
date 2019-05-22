@@ -17,12 +17,18 @@ class UsersController < ApplicationController
 		end
 
 		def set_own_auctions
-			@own_auctions = Auction.where(:user_id => @user.id)
+			@own_auctions = Auction.where(:user_id => @user.id).paginate(page: params[:page1], per_page: 5)
 		end
 
 		def set_bid_auctions
+			@bid_auctions = []
 			@tickets = Ticket.where(:user_id => current_user.id)
-			@bid_auctions = Auction.where(:id => @tickets.auction_id)
+			@tickets.each do |ticket|
+				@bid_auctions += Auction.where(:id => ticket.auction_id)
+			end
+			@bid_auctions = @bid_auctions.uniq
+			@bid_auctions = @bid_auctions.paginate(page: params[:page2], per_page: 5)
+
 		end
 
 end

@@ -17,16 +17,18 @@
         </div>
         <ul class="nav navbar-nav">
             <li><%= link_to 'Home', root_path %></li>
-            <li><a>About</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <%if user_signed_in? %>
             <li>
-                <%= link_to "Wyloguj się", destroy_user_session_path, method: :delete  %>
+              <%= link_to 'My page', current_user %>
+            </li>
+            <li>
+                <%= link_to "Log out", destroy_user_session_path, method: :delete  %>
             </li>
           <%else%>
             <li>             
-              <%= link_to "Zaloguj się",  new_user_session_path %>
+              <%= link_to "Log in",  new_user_session_path %>
             </li>
           <%end%>
         </ul>
