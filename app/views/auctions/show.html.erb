@@ -1,10 +1,9 @@
-
-<% if @auction.try(:active_boolean) %>
+<% if @auction.active_boolean || @auction.ends_at < DateTime.now %>
   <div class="success">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
     <strong><center>STATUS active</center></strong>
   </div>
-<%else%>
+  <%else%>
   <div class="alert">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
     <strong><center>STATUS inactive</center></strong>
@@ -12,13 +11,15 @@
 <% end %>
 
 <p>
-  <strong>Description:</strong>
+  <strong>Description</strong>
   <br/>
-  <%= h(@auction.description).gsub(/\n/, '<br/>').html_safe %>
+  <div class="disc">
+    <%= h(@auction.description).gsub(/\n/, '<br/>').html_safe %>
+  </div>
 </p>
 
 <p>
-  <strong>Cena początkowa</strong>
+  <strong>Start bid</strong>
   <%= @auction.price %>
 </p>
 <p>
@@ -27,10 +28,14 @@
   <%= link_to user.email ,user %>
   <% end %>
 </p>
+<p>
+    <strong>Time left</strong>
+    <%= TimeDifference.between(DateTime.now, @auction.ends_at).humanize %>
+  </p>
 <table class="table table-striped table-dark">
   <tbody class="table table-striped table-dark">
   <p>
-  	<strong> Aktualna cena </strong>
+  	<strong>Current price</strong>
   	<% @tickets.each do |ticket|  %>
   	<tr>
           <td><%= ticket.amount %></td>
@@ -43,7 +48,6 @@
   <%= link_to 'Edit', edit_auction_path(@auction) %> |
 <% end %> 
 <div class=btn-group>
-  <%= button_to 'Edit', edit_auction_path(@auction), :method => :get, :class=> 'btn btn-primary' %>
   <%= button_to 'Back', auctions_path, :method => :get, :class=> 'btn btn-primary' %>
   <%= button_to "Bid", new_auction_ticket_path(@auction), :method => :get, :class=> 'btn btn-primary' %>
 </div>

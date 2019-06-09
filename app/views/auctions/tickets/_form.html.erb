@@ -1,6 +1,9 @@
+<div class="col-md-6 col-md-offset-3">
+  <div class="signup-form">
 <span class="border border-danger">
+<h1>Place in your offer</h1>
 <p><strong><%= notice %></strong></p></span>
-<%= form_for ([@auction, @ticket]) do |f| %>
+<%= simple_form_for ([@auction, @ticket]) do |f| %>
   <% if @ticket.errors.any? %>
     <div id="error_explanation">
 <div class="alert alert-danger" role="alert">
@@ -14,13 +17,14 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :amount %>
-    <%= f.text_field :amount %>
+    <div class="form-inputs">
+    <%= f.input :amount %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit, "Bid", :class=>"btn btn-primary" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
 
+</div>
+</div>

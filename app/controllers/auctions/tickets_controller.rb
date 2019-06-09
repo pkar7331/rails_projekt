@@ -32,38 +32,42 @@ class Auctions::TicketsController < ApplicationController
     @auction = Auction.find(params[:auction_id])
     @ticket.user_id = current_user.id
     @ticket.auction_id = @auction.id
-    if @auction.ends_at > DateTime.now
-      if @top_ticket == nil
-        if @ticket.amount < @auction.price
-          redirect_to request.referrer, notice: 'Minimalna kwota jest większa'
+    if @ticket.amount != nil
+      if @auction.ends_at > DateTime.now
+        if @top_ticket == nil
+          if @ticket.amount < @auction.price
+            redirect_to request.referrer, notice: 'Minimal price is higher'
+          else
+            respond_to do |format|
+              if @ticket.save
+                format.html { redirect_to auction_url(@ticket.auction_id), notice: 'Ticket was successfully created.' }
+                format.json { render :show, status: :created, location: @ticket }
+              else
+                format.html { render :new }
+                format.json { render json: @ticket.errors, status: :unprocessable_entity }
+              end
+            end  
+          end
         else
-          respond_to do |format|
-            if @ticket.save
-              format.html { redirect_to auction_url(@ticket.auction_id), notice: 'Ticket was successfully created.' }
-              format.json { render :show, status: :created, location: @ticket }
-            else
-              format.html { render :new }
-              format.json { render json: @ticket.errors, status: :unprocessable_entity }
-            end
-          end  
-        end
-      else
-        if @ticket.amount <= @top_ticket.amount
-           redirect_to request.referrer, notice: 'Ticket was unsuccessfully created.'
-        else
-          respond_to do |format|
-            if @ticket.save
-              format.html { redirect_to auction_url(@ticket.auction_id), notice: 'Ticket was successfully created.' }
-              format.json { render :show, status: :created, location: @ticket }
-            else
-              format.html { render :new }
-              format.json { render json: @ticket.errors, status: :unprocessable_entity }
+          if @ticket.amount <= @top_ticket.amount
+             redirect_to request.referrer, notice: 'Current pirce is higher'
+          else
+            respond_to do |format|
+              if @ticket.save
+                format.html { redirect_to auction_url(@ticket.auction_id), notice: 'Ticket was successfully created.' }
+                format.json { render :show, status: :created, location: @ticket }
+              else
+                format.html { render :new }
+                format.json { render json: @ticket.errors, status: :unprocessable_entity }
+              end
             end
           end
         end
+      else
+        redirect_to request.referrer, notice: 'Time left for bidding is over'
       end
     else
-      redirect_to request.referrer, notice: 'Time left for bidding is over'
+      redirect_to request.referrer, notice: 'Cant be null'
     end
   end
 

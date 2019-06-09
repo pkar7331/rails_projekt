@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_05_10_114825) do
     t.integer "user_id"
     t.string "title"
     t.datetime "ends_at"
-    t.string "active_boolean"
+    t.boolean "active_boolean"
   end
 
   create_table "tickets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
